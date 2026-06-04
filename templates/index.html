@@ -32,7 +32,10 @@
             const question = input.value.trim();
             if (!question) return;
 
-            chat.innerHTML += `<div class="user-msg">${question}</div>`;
+            const userDiv = document.createElement("div");
+            userDiv.className = "user-msg";
+            userDiv.textContent = question;
+            chat.appendChild(userDiv);
             input.value = "";
 
             const response = await fetch("/ask", {
@@ -41,7 +44,11 @@
                 body: JSON.stringify({question})
             });
             const data = await response.json();
-            chat.innerHTML += `<div class="bot-msg">${data.answer}</div>`;
+            const botDiv = document.createElement("div");
+            botDiv.className = "bot-msg";
+            botDiv.textContent = data.answer;
+            chat.appendChild(botDiv);
+            chat.scrollTop = chat.scrollHeight;
             chat.scrollTop = chat.scrollHeight;
         }
     </script>
